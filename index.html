@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="graph.css">
+    <script src="dft.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph DFT</title>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <th>周波数</th>
+                <th>cos成分</th>
+                <th>sin成分</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td><input type="number" name="" id="cos1" value="0"></td>
+                <td><input type="number" name="" id="sin1" value="0"></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><input type="number" name="" id="cos2" value="0"></td>
+                <td><input type="number" name="" id="sin2" value="0"></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><input type="number" name="" id="cos3" value="0"></td>
+                <td><input type="number" name="" id="sin3" value="0"></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><input type="number" name="" id="cos4" value="0"></td>
+                <td><input type="number" name="" id="sin4" value="0"></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><input type="number" name="" id="cos5" value="0"></td>
+                <td><input type="number" name="" id="sin5" value="0"></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td><input type="number" name="" id="cos6" value="0"></td>
+                <td><input type="number" name="" id="sin6" value="0"></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td><input type="number" name="" id="cos7" value="0"></td>
+                <td><input type="number" name="" id="sin7" value="0"></td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <select id="sample_number">
+            <option value="8" selected>8</option>
+            <option value="10">10</option>
+            <option value="16">16</option>
+            <option value="20">20</option>
+            <option value="32">32</option>
+            <option value="64">64</option>
+        </select>
+        <button id="get">サンプリング</button>
+    </div>
+    <div id="fn_bg">
+        <canvas id="fn" width="640" height="480">
+
+        </canvas>
+    </div>
+    <div id="am_bg">
+        <canvas id="am" width="640" height="480">
+
+        </canvas>
+    </div>
+</body>
+</html>
