@@ -51,21 +51,23 @@ btn1.addEventListener('click', ()=> {
 
   // DFT係数計算
   let x = new Array(P);
+  let ar = new Array(P);
+  let ai = new Array(P);
   for (let n = 0; n < P; n++) {
-    let ar = 0.0;
-    let ai = 0.0;
+    ar[n] = 0.0;
+    ai[n] = 0.0;
     for (let m = 0; m < P; m++) {
       let x = ((2.0 * Math.PI) / P) * m * n;
-      ar += f[m] * Math.cos(-x);
-      ai += f[m] * Math.sin(-x);
+      ar[n] += f[m] * Math.cos(-x);
+      ai[n] += f[m] * Math.sin(-x);
     }
-    ar /= P;
-    ai /= P;
-    x[n] = Math.sqrt(4.0 * ar * ar + 4.0 * ai * ai);
+    ar[n] /= P;
+    ai[n] /= P;
+    x[n] = Math.sqrt(4.0 * ar[n] * ar[n] + 4.0 * ai[n] * ai[n]);
   }
-  maxx = Math.max(...x);
-  console.log(x);
-  // 周波数領域のグラフ描画
+  let maxx = Math.max(...x);
+  //console.log(x);
+  // 周波数領域のグラフ描画（スカラー値のグラフ）
   let graph2 = document.querySelector('#am');
   let g2 = graph2.getContext('2d');
   g2.beginPath();
@@ -73,13 +75,41 @@ btn1.addEventListener('click', ()=> {
   g2.moveTo( 0, 460 );
   g2.lineTo(640,460 );
   g2.stroke();
+  console.log(x);
   g2.beginPath();
-  //g2.lineWidth = 1;
-  //g2.strokeStyle='blue';
   for( let m=1; m<P/2; m++ ) {
-    g2.rect( 20+m*620/P, 460-x[m]*420/maxx, 620/P, x[m]*420/maxx );
+    g2.rect( 20+m*620/P, 460-x[m]*420/maxx, 620/P-2, x[m]*420/maxx );
   }
   g2.stroke();
-  console.log('end');
+
+    // 周波数領域のグラフ描画（実数部と虚数部が別々のグラフ）
+  let max2 = Math.max(...ar,...ai);
+  let max3 = Math.min(...ar,...ai);
+  let max4 = Math.max( Math.abs(max2), Math.abs(max3) );
+
+  let graph3 = document.querySelector('#am_complex');
+  let g3 = graph3.getContext('2d');
+  g3.beginPath();
+  g3.clearRect(0,0,graph3.width,graph3.height);
+  g3.moveTo( 0, 240 );
+  g3.lineTo( 640, 240 );
+  g3.stroke();
+
+  g3.beginPath();
+  for( let m=1; m<P; m++ ) {
+    let m2=m-1;
+    g3.rect( 20+m*620/P, 240-ar[m]*220/max4, 620/P*0.7-2, ar[m]*220/max4 );
+    g3.rect( 20+m*620/P+(620/P)*0.3, 240-ai[m]*220/max4, 620/P*0.7-2, ai[m]*220/max4 );
+  }
+  g3.stroke();
 });
 
+document.querySelector('#view_normal').addEventListener('click', () => {
+  document.querySelector('#am_complex').style.display="none";
+  document.querySelector('#am').style.display="block";
+});
+
+document.querySelector('#view_complex').addEventListener('click', () => {
+  document.querySelector('#am').style.display="none";
+  document.querySelector('#am_complex').style.display="block";
+});

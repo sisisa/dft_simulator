@@ -4,4 +4,9 @@
 
 #am {
     background-color:rgba(221, 236, 248, 0.501);
+    display: none;
+}
+
+#am_complex {
+    background-color:rgba(221, 236, 248, 0.501);
 }

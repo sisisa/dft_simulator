@@ -68,10 +68,13 @@
 
         </canvas>
     </div>
+    <input type="radio" name="view" id="view_normal">
+    <label for="view_normal">スケール表示</label>
+    <input type="radio" name="view" id="view_complex" checked>
+    <label for="view_complex">実数部と虚数部を別々に表示</label>
     <div id="am_bg">
-        <canvas id="am" width="640" height="480">
-
-        </canvas>
+        <canvas id="am" width="640" height="480"></canvas>
+        <canvas id="am_complex" width="640" height="480"></canvas>
     </div>
 </body>
 </html>
