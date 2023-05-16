@@ -30,9 +30,9 @@ btn1.addEventListener('click', ()=> {
   for( let i=1; i<8; i++ )
     for (let m = 0; m < P; m++)
       f[m] += func_y(((2.0 * Math.PI) / P) * m, amr[i], ami[i], i);
-  let maxf = Math.max(...f);
-  console.log(f);
-  console.log(maxf);
+  let maxf = Math.max(...f,1.0);
+  //console.log(f);
+  //console.log(maxf);
   // 時間領域のグラフ描画
   let graph1 = document.querySelector('#fn');
   let g1 = graph1.getContext('2d');
@@ -65,8 +65,8 @@ btn1.addEventListener('click', ()=> {
     ai[n] /= P;
     x[n] = Math.sqrt(4.0 * ar[n] * ar[n] + 4.0 * ai[n] * ai[n]);
   }
-  let maxx = Math.max(...x);
-  //console.log(x);
+  let maxx = Math.max(1.0,...x);
+  console.log(maxx);
   // 周波数領域のグラフ描画（スカラー値のグラフ）
   let graph2 = document.querySelector('#am');
   let g2 = graph2.getContext('2d');
@@ -85,7 +85,7 @@ btn1.addEventListener('click', ()=> {
     // 周波数領域のグラフ描画（実数部と虚数部が別々のグラフ）
   let max2 = Math.max(...ar,...ai);
   let max3 = Math.min(...ar,...ai);
-  let max4 = Math.max( Math.abs(max2), Math.abs(max3) );
+  let max4 = Math.max( Math.abs(max2), Math.abs(max3),1.0 );
 
   let graph3 = document.querySelector('#am_complex');
   let g3 = graph3.getContext('2d');
