@@ -1,1 +1,1 @@
-# graph_dft
+# dft_simulator
