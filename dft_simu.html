@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DFTシミュレータ</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.5.1/plotly.min.js"></script>
+</head>
+<body>
+    <h1>離散フーリエ変換（DFT）シミュレータ</h1>
+    <p>シミュレーションの説明をここに追加します。</p>
+    
+    <div>
+        <label for="numPoints">データポイント数：</label>
+        <input type="number" id="numPoints" value="8">
+        <button onclick="updateDFT()">更新</button>
+    </div>
+    
+    <div id="originalSignalPlot"></div>
+    <div id="dftPlot"></div>
+    
+    <script>
+        function updateDFT() {
+            const numPoints = parseInt(document.getElementById("numPoints").value, 10);
+            const originalSignal = generateSignal(numPoints);
+            const dftResult = computeDFT(originalSignal);
+
+            // プロットの更新
+            plotSignal(originalSignal, "originalSignalPlot", "元の信号");
+            plotDFT(dftResult, "dftPlot", "DFT");
+        }
+
+        function generateSignal(numPoints) {
+            // ここで適切な信号を生成するコードを記述します（例：正弦波、矩形波など）。
+        }
+
+        function computeDFT(signal) {
+            // ここでDFTを計算するコードを記述します。
+        }
+
+        function plotSignal(signal, containerId, title) {
+            // 信号のプロットを作成するコードを記述します。
+        }
+
+        function plotDFT(dftResult, containerId, title) {
+            // DFT結果のプロットを作成するコードを記述します。
+        }
+
+        // 初期化時に一度シミュレーションを実行
+        updateDFT();
+    </script>
+</body>
+</html>

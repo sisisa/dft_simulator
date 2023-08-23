@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DFTシミュレータ</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.5.1/plotly.min.js"></script>
+</head>
+<body>
+    <h1>離散フーリエ変換（DFT）シミュレータ</h1>
+    <p>離散フーリエ変換（DFT）は、時系列データを周波数成分に変換する方法です。以下のシミュレータで基本的な概念を学びましょう。</p>
+    
+    <div>
+        <label for="numPoints">データポイント数：</label>
+        <input type="number" id="numPoints" value="16">
+        <button onclick="updateDFT()">更新</button>
+    </div>
+    
+    <div id="originalSignalPlot"></div>
+    <div id="dftPlot"></div>
+    
+    <h2>シミュレータの使い方</h2>
+    <ol>
+        <li>データポイント数を設定します。</li>
+        <li>「更新」ボタンをクリックして元の信号とDFTを計算します。</li>
+        <li>元の信号のグラフとDFTの周波数スペクトルを確認します。</li>
+    </ol>
+    
+    <h2>周波数スペクトルの例</h2>
+    <p>データポイント数を調整して、異なる信号の周波数スペクトルを観察してみましょう。</p>
+    
+    <script>
+        function updateDFT() {
+            const numPoints = parseInt(document.getElementById("numPoints").value, 10);
+            const originalSignal = generateSignal(numPoints);
+            const dftResult = computeDFT(originalSignal);
+
+            plotSignal(originalSignal, "originalSignalPlot", "元の信号");
+            plotDFT(dftResult, "dftPlot", "DFT 周波数スペクトル");
+        }
+
+        function generateSignal(numPoints) {
+            const signal = [];
+            for (let i = 0; i < numPoints; i++) {
+                const time = i / numPoints;
+                const value = Math.sin(2 * Math.PI * 5 * time) + 0.5 * Math.sin(2 * Math.PI * 20 * time);
+                signal.push(value);
+            }
+            return signal;
+        }
+
+        function computeDFT(signal) {
+            const numPoints = signal.length;
+            const dftResult = [];
+
+            for (let k = 0; k < numPoints; k++) {
+                let realPart = 0;
+                let imagPart = 0;
+
+                for (let n = 0; n < numPoints; n++) {
+                    const angle = (2 * Math.PI * k * n) / numPoints;
+                    realPart += signal[n] * Math.cos(angle);
+                    imagPart -= signal[n] * Math.sin(angle);
+                }
+
+                dftResult.push(Math.sqrt(realPart ** 2 + imagPart ** 2));
+            }
+
+            return dftResult;
+        }
+
+        function plotSignal(signal, containerId, title) {
+            const trace = {
+                x: Array.from({ length: signal.length }, (_, i) => i),
+                y: signal,
+                type: "scatter",
+                mode: "lines",
+                name: title,
+            };
+
+            const layout = {
+                title: title,
+                xaxis: { title: "時間" },
+                yaxis: { title: "信号の振幅" },
+            };
+
+            Plotly.newPlot(containerId, [trace], layout);
+        }
+
+        function plotDFT(dftResult, containerId, title) {
+            const frequencies = Array.from({ length: dftResult.length }, (_, i) => (i * 1.0) / dftResult.length);
+            const trace = {
+                x: frequencies,
+                y: dftResult,
+                type: "bar",
+                name: title,
+            };
+
+            const layout = {
+                title: title,
+                xaxis: { title: "正規化周波数" },
+                yaxis: { title: "周波数成分の振幅" },
+            };
+
+            Plotly.newPlot(containerId, [trace], layout);
+        }
+
+        // 初期化時に一度シミュレーションを実行
+        updateDFT();
+    </script>
+</body>
+</html>

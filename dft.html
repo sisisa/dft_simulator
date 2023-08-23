@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DFTシミュレータ</title>
+</head>
+<body>
+  <h1>離散フーリエ変換（DFT）シミュレータ</h1>
+  
+  <!-- 入力フォーム -->
+  <label for="sample_number">サンプル数：</label>
+  <input type="number" id="sample_number" value="128"><br>
+  <button id="get">計算する</button>
+  
+  <!-- 時間領域のグラフ -->
+  <h2>時間領域の波形</h2>
+  <canvas id="fn" width="640" height="480"></canvas>
+  
+  <!-- 周波数領域のグラフ表示切替 -->
+  <button id="view_normal">スカラーグラフ表示</button>
+  <button id="view_complex">実部・虚部グラフ表示</button>
+  
+  <!-- 周波数領域のグラフ（スカラー） -->
+  <h2>周波数領域の振幅</h2>
+  <canvas id="am" width="640" height="480"></canvas>
+  
+  <!-- 周波数領域のグラフ（実部・虚部） -->
+  <h2>周波数領域の実部・虚部</h2>
+  <canvas id="am_complex" width="640" height="480"></canvas>
+  
+  <script>
+    // ボタンクリック時の処理
+    document.querySelector('#get').addEventListener('click', () => {
+      // サンプル数の取得
+      let P = Number(document.querySelector('#sample_number').value);
+      
+      // アムプライトゥードとフェーズの初期化
+      let amr = new Array(8);
+      let ami = new Array(8);
+      for (let i = 1; i <= 7; i++) {
+        amr[i] = Number(document.querySelector(`#cos${i}`).value);
+        ami[i] = Number(document.querySelector(`#sin${i}`).value);
+      }
+      
+      // サンプルデータの生成
+      let f = new Array(P).fill(0.0);
+      let func_y = (x, amr, ami, freq) => ami * Math.sin(freq * x) + amr * Math.cos(freq * x);
+
+      for (let i = 1; i <= 7; i++) {
+        for (let m = 0; m < P; m++) {
+          f[m] += func_y((2.0 * Math.PI / P) * m, amr[i], ami[i], i);
+        }
+      }
+      
+      // ... (以降、DFTの計算とグラフ描画、表示切替の処理を追加)
+      
+    });
+    
+    // 表示切替ボタンの処理
+    document.querySelector('#view_normal').addEventListener('click', () => {
+      document.querySelector('#am_complex').style.display = "none";
+      document.querySelector('#am').style.display = "block";
+    });
+
+    document.querySelector('#view_complex').addEventListener('click', () => {
+      document.querySelector('#am').style.display = "none";
+      document.querySelector('#am_complex').style.display = "block";
+    });
+  </script>
+</body>
+</html>
